@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>时钟</title>
+	<style>
+	body{
+		background: #ccc;
+	}
+	#asd{
+		position: absolute;
+		margin: auto;
+		top:0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		/*border: 1px solid #000;*/
+	}
+	.box{
+		position: absolute;
+		margin: auto;
+		top:0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		border-radius: 50%;
+		width: 600px;
+		height: 600px;
+		background: #aabbcc;
+		z-index: -1000;
+		background: url('./biao2.jpg');
+		background-position: cover;
+	}
+	</style>
+</head>
+<body>
+	<canvas width="600px" height="600px" id="asd"></canvas>
+	<div class="box"></div>
+</body>
+<script type="text/javascript">
+	var canvas=document.querySelector('canvas')
+	var ctx=canvas.getContext('2d')
+	function r(a){
+		return (Math.PI/180)*a;
+	}
+	function qwer(){
+		ctx.clearRect(0,0,600,600)
+		var now=new Date();
+		var second=now.getSeconds()
+		var minute=now.getMinutes()
+		var hour=now.getHours()
+		// 表框
+		ctx.save()
+		ctx.translate(300,300)
+		ctx.beginPath()
+		ctx.arc(0,0,250,0,r(360))
+		for (var i = 0; i < 60; i++) {
+			ctx.moveTo(0,248)
+			if (i%5===0) {
+			ctx.lineTo(0,220)
+			}else{
+			ctx.lineTo(0,230)
+			}
+			ctx.rotate(r(6))
+		};
+		ctx.stroke()
+		ctx.closePath()
+
+
+		// 中心圆
+		ctx.save()
+		ctx.beginPath()		
+		ctx.moveTo(10,0)
+		ctx.arc(0,0,10,0,r(360))		
+		ctx.stroke()
+		ctx.closePath()
+		ctx.restore()
+
+		// 秒针
+		ctx.save()
+		ctx.beginPath()
+		ctx.rotate(second*r(6))
+		ctx.strokeStyle = "white";
+		ctx.moveTo(0,40)
+		ctx.lineTo(0,10)
+		ctx.moveTo(0,-10)
+		ctx.lineTo(0,-165)
+		ctx.stroke()
+		ctx.closePath()
+		ctx.restore()
+
+
+		// 分针
+		ctx.save()
+		ctx.beginPath()
+		ctx.rotate((minute*60+second)*r(0.1))
+		ctx.strokeStyle = "white";
+		ctx.moveTo(0,30)
+		ctx.lineTo(0,10)
+		ctx.moveTo(0,-10)
+		ctx.lineTo(0,-140)
+		ctx.stroke()
+		ctx.closePath()
+		ctx.restore()
+
+
+		// 时针
+		ctx.save()
+		ctx.beginPath()
+		ctx.rotate((hour*60+minute)*r(0.5))
+		ctx.strokeStyle = "white";
+		ctx.moveTo(0,20)
+		ctx.lineTo(0,10)
+		ctx.moveTo(0,-10)
+		ctx.lineTo(0,-110)
+		ctx.stroke()
+		ctx.closePath()
+		ctx.restore()
+		ctx.restore()
+
+	}
+	qwer()
+		setInterval(qwer,1000)
+</script>
+</html>
